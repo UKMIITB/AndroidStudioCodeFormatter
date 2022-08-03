@@ -14,12 +14,13 @@ def autoFormatTheCode(fileName):
     pyautogui.press('return')
     time.sleep(1)
     pyautogui.hotkey('optionleft', 'command', 'l')
-    time.sleep(1)
-    pyautogui.press('return')
 
 
 def runKtlintFix(fileName):
     subprocess.run(["ktlint", "-F", fileName])
+
+
+def closeTheCurrentFile():
     pyautogui.hotkey('command', 'w')
 
 
@@ -33,6 +34,7 @@ try:
                 print("Started optimising on " + fileName)
                 time.sleep(1)
                 autoFormatTheCode(fileName)
+                closeTheCurrentFile()
 
             elif (".kt" in file):
                 fileName = os.path.join(root, file)
@@ -40,5 +42,6 @@ try:
                 time.sleep(1)
                 autoFormatTheCode(fileName)
                 runKtlintFix(fileName)
+                closeTheCurrentFile()
 except:
     print("Missing or wrong path")
